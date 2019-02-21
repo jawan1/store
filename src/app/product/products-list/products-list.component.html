@@ -1,0 +1,61 @@
+<app-header>
+  <p content>Store</p>
+</app-header>
+<div id="container">
+  <table id="scores" *ngIf="products && products.length>0">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Country</th>
+      <th>Price</th>
+      <th>Shop</th>
+      <th>Remove</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr style="cursor: pointer;" *ngFor="let product of products" [routerLink]="['/products', product.idProduct]">
+      <td>{{product.name}}</td>
+      <td>{{product.country}}</td>
+      <td>{{product.price}}</td>
+      <td>
+        <ul *ngFor="let shop of product.shops">
+          <li>{{shop.name}}, {{shop.street}}, {{shop.city}}</li>
+        </ul>
+      </td>
+      <td style="cursor: pointer" (click)="removeProduct(product.idProduct, $event)">Remove it</td>
+    </tr>
+    </tbody>
+  </table>
+  <p class="subtitle">New product</p>
+  <div>
+    <form [formGroup]="productForm">
+      <div>
+        <label class="names">Name</label><br>
+        <input type="text" placeholder="name" formControlName="name">
+        <p class="error" *ngIf="!productForm.get('name').valid && productForm.get('name').dirty">Required field</p>
+      </div>
+      <div>
+        <label class="names">Country</label><br>
+        <input type="text" placeholder="country" formControlName="country">
+        <p class="error" *ngIf="!productForm.get('country').valid && productForm.get('country').dirty">Required field</p>
+      </div>
+      <div>
+        <label class="names">Price</label><br>
+        <input type="text" placeholder="price" formControlName="price">
+        <p class="error" *ngIf="!productForm.get('price').valid && productForm.get('price').dirty">Required field</p>
+      </div>
+      <br>
+      <div>
+        <button type="submit" (click)="addNewProduct()" [disabled]="productForm.invalid">Submit</button>
+      </div>
+      <br>
+      <div>
+        <button (click)="productForm.reset()">Clear</button>
+      </div>
+    </form>
+  </div>
+</div>
+<!--<pre>{{productForm.value | json}}</pre>-->
+<!--<pre>Stan validacji name: {{productForm.get('name').valid | json}}</pre>-->
+<!--<pre>Stan validacji country: {{productForm.get('country').valid | json}}</pre>-->
+<!--<pre>Stan validacji price: {{productForm.get('price').valid | json}}</pre>-->

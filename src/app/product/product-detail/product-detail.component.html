@@ -1,0 +1,76 @@
+<app-header>
+  <p content>Edition of a product: {{product?.name}}</p>
+</app-header>
+<div id="container" *ngIf="product">
+  <p class="subtitle">Update product</p>
+  <form [formGroup]="productForm">
+    <div>
+      <label class="names">Name</label><br>
+      <input type="text" placeholder="name" formControlName="name">
+      <p class="error" *ngIf="!productForm.get('name').valid && productForm.get('name').dirty">Required field</p>
+    </div>
+    <div>
+      <label class="names">Country</label><br>
+      <input type="text" placeholder="country" formControlName="country">
+      <p class="error" *ngIf="!productForm.get('country').valid && productForm.get('country').dirty">Required field</p>
+    </div>
+    <div>
+      <label class="names">Price</label><br>
+      <input type="text" placeholder="price" formControlName="price">
+      <p class="error" *ngIf="!productForm.get('price').valid && productForm.get('price').dirty">Required field</p>
+    </div>
+    <br>
+    <div>
+      <button type="submit" (click)="updateProduct(productForm.value)" [disabled]="productForm.invalid">Submit</button>
+    </div>
+  </form>
+  <div>
+    <p class="subtitle">All shops</p>
+    <table id="scores" *ngIf="product && product.shops.length>0">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Street</th>
+        <th>City</th>
+        <th>Remove</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let shop of product.shops">
+        <td>{{shop.name}}</td>
+        <td>{{shop.street}}</td>
+        <td>{{shop.city}}</td>
+        <td style="cursor: pointer" (click)="removeShop(shop.idShop)">Remove it</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <p class="subtitle">Add new shop</p>
+    <div>
+      <form [formGroup]="shopForm">
+        <div>
+          <label class="names">Name</label><br>
+          <input type="text" placeholder="name" formControlName="name">
+          <p class="error" *ngIf="!shopForm.get('name').valid && shopForm.get('name').dirty">Required field</p>
+        </div>
+        <div>
+          <label class="names">Street</label><br>
+          <input type="text" placeholder="street" formControlName="street">
+          <p class="error" *ngIf="!shopForm.get('street').valid && shopForm.get('street').dirty">Required field</p>
+        </div>
+        <div>
+          <label class="names">City</label><br>
+          <input type="text" placeholder="city" formControlName="city">
+          <p class="error" *ngIf="!shopForm.get('city').valid && shopForm.get('city').dirty">Required field</p>
+        </div>
+        <br>
+        <div>
+          <button type="submit" (click)="addNewShop(product.idProduct ,shopForm.value)" [disabled]="shopForm.invalid">Add new shop</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
